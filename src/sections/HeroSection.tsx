@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { wedding } from "@/lib/wedding";
+import { event } from "@/lib/wedding";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { cn } from "@/lib/utils";
@@ -56,14 +56,9 @@ export function HeroSection({ onRsvp }: { onRsvp: () => void }) {
 
           <div className="relative overflow-hidden rounded-[36px] border border-white/45 shadow-[0_30px_110px_rgba(58,31,27,0.16)]">
             <div
-  className="
-    absolute inset-0
-    bg-[url('/gallery/phunuvietnam.jpg')]
-    bg-no-repeat
-    bg-[length:90%_auto]
-    bg-center
-  "
-/>
+              aria-hidden="true"
+              className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,246,241,.42),rgba(243,236,229,.55)),url('/images/hero-background.jpg'),radial-gradient(ellipse_at_50%_0%,#d9e9f7,transparent_65%),linear-gradient(135deg,#faf5e9,#e6eafa)] bg-cover bg-center bg-no-repeat"
+            />
 
             <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/55 to-white/80" />
 
@@ -73,7 +68,7 @@ export function HeroSection({ onRsvp }: { onRsvp: () => void }) {
               </p>
               <div className="mt-10 flex flex-col gap-3">
                 <h1 className="text-center font-serif text-5xl leading-[0.95] text-ink sm:text-7xl">
-                  {wedding.eventName.split(" – ").map((part, i) => (
+                  {event.eventName.split(" – ").map((part, i) => (
   <span key={part}>
     {i > 0 && <br />}
     {part}
@@ -82,7 +77,7 @@ export function HeroSection({ onRsvp }: { onRsvp: () => void }) {
                 </h1>
                 <div className="mt-6 h-px w-28 bg-gradient-to-r from-burgundy/55 to-transparent" />
                 <p className="mt-6 max-w-xl font-sans text-base leading-8 text-ink-muted sm:text-lg">
-                  {wedding.description}
+                  {event.description}
                 </p>
               </div>
 
@@ -92,10 +87,10 @@ export function HeroSection({ onRsvp }: { onRsvp: () => void }) {
                   onClick={onRsvp}
                   className="w-full sm:w-auto"
                 >
-                  Đăng ký ngay
+                  Đăng ký
                 </Button>
                 <p className="font-sans text-sm tracking-wide text-ink-muted">
-                  {wedding.date.display} · {wedding.date.location}
+                  {event.date.display} · {event.venue.name}
                 </p>
               </div>
             </div>

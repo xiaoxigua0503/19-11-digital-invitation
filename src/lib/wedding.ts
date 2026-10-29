@@ -1,46 +1,28 @@
-export const wedding = {
-  eventName: "20/10 – Vietnamese Women's Day",
-  shortName: "20/10",
+/** Single source of truth for event details. Unknown logistics stay explicitly unset. */
+export const event = {
+  eventName: "International Men's Day",
+  shortName: "Men's Day",
   date: {
-    iso: "2026-10-20T11:00:00+08:00",
-    display: "20 tháng 10, 2026 · 11:00",
-    location: "Chongqing University, Trung Quốc",
+    iso: "2026-11-19T00:00:00",
+    display: "19 tháng 11, 2026",
+    calendarDate: "20261119",
+    time: "11:00 AM – 3:00 AM" as string | null,
   },
   venue: {
-    name: "Địa điểm sự kiện",
-    lines: [
-      "Chongqing University, Trung Quốc",
-      "Chi tiết địa điểm sẽ được cập nhật sau.",
-    ],
-    mapQuery: "Chongqing University , Trung Quốc",
+    name: "Chongqing University, Campus A (重庆大学 A 校区)",
+    lines: ["Campus A"],
+    mapQuery: "重庆大学 A 校区",
   },
+  organizer: "Made with love by Vietnamese Student Association in Chongqing University",
   description:
-    "Một ngày để yêu thương được gọi tên, để những người phụ nữ Việt Nam được nâng niu và tỏa sáng — nơi những người con xa quê tại Trùng Khánh cùng gửi trao niềm tự hào, niềm tin và những ước mơ đang lớn.",
+    "Tháng Mười Một về, mang theo một ngày thật đặc biệt — ngày để những chàng trai được ghi nhận vì những nỗ lực không lời, được trân trọng vì sự kiên trì trên hành trình trưởng thành, và được nhắc rằng: phía sau vẻ ngoài mạnh mẽ, họ cũng xứng đáng được yêu thương, sẻ chia và thấu hiểu.\n\nGiữa một thành phố xa quê, chúng ta gặp nhau không chỉ để đón Ngày Quốc tế Nam giới 19/11, mà còn để cùng viết nên một khoảng trời nhỏ của người Việt — nơi có tình anh em, có những câu chuyện chưa từng kể, có tiếng cười của những ngày thanh xuân và có những ước mơ vẫn đang lớn lên từng ngày. Bởi hành trình trở thành phiên bản tốt hơn của chính mình sẽ ý nghĩa hơn khi ta biết rằng, trên con đường ấy, mình chưa bao giờ đơn độc.",
 } as const;
 
-export const weddingTimeline = [
-  { time: "11:00", title: "Lễ mở cửa", note: "Chào đón và sắp xếp chỗ ngồi" },
-  { time: "11:30", title: "Lời chúc và lời dẫn", note: "Những câu chuyện ý nghĩa của ngày 20/10" },
-  { time: "12:30", title: "Hoạt động kết nối", note: "Chia sẻ hình ảnh và kỷ niệm cùng bạn bè" },
-  { time: "14:00", title: "Bữa ăn", note: "Nghênh hưởng cùng nhau" },
-  { time: "16:00", title: "Hoạt động cuối", note: "Lời chúc và hẹn gặp lại trong tương lai" },
-] as const;
+export const eventTimeline: readonly { time: string; title: string; note: string }[] = [];
 
 export const faq = [
-  {
-    q: "Sự kiện có những hoạt động gì?",
-    a: "Chương trình sẽ có nhiều hoạt động giao lưu, chia sẻ và những khoảnh khắc đặc biệt dành cho các bạn nữ. Chi tiết chương trình sẽ được cập nhật sớm trên trang.",
-  },
-  {
-    q: "Tôi có cần đăng ký trước không?",
-    a: "Có. Vui lòng hoàn thành form RSVP để ban tổ chức có thể chuẩn bị chu đáo về chỗ ngồi và các hoạt động trong chương trình.",
-  },
-  {
-    q: "Tôi có thể tham gia cùng bạn bè không?",
-    a: "Tất nhiên! Hãy rủ thêm những người bạn Việt Nam tại Trùng Khánh cùng tham gia và ghi rõ số lượng người đi cùng trong form RSVP nhé.",
-  },
-  {
-    q: "Tôi nên chuẩn bị gì cho sự kiện?",
-    a: "Chỉ cần mang theo một tâm trạng thật vui và một chút háo hức. Đừng quên diện một bộ trang phục bạn cảm thấy tự tin và thoải mái nhất!",
-  },
+  { q: "Mình nên đến trước bao lâu?", a: "Bạn hãy cố gắng đến đúng giờ để có thể ổn định chỗ ngồi và cùng chúng mình bắt đầu buổi gặp gỡ thật trọn vẹn nhé! 🌷" },
+  { q: "Tôi có cần đăng kí trước không?", a: "Có. Vui lòng hoàn thành form đăng kí bên dưới để ban tổ chức có thể chuẩn bị chu đáo về chỗ ngồi và các hoạt động trong chương trình." },
+  { q: "Tôi có thể tham gia cùng bạn bè không?", a: "Tất nhiên! Hãy rủ thêm những người bạn cùng tham gia để lưu giữ khoảnh khắc đáng nhớ này nhé~" },
+  { q: "Tôi nên chuẩn bị gì cho sự kiện?", a: "Chỉ cần mang theo một tâm trạng thật vui và một chút háo hức. Đừng quên diện một bộ trang phục bạn cảm thấy tự tin và thoải mái nhất!" },
 ] as const;

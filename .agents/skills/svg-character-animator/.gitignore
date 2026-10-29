@@ -1,0 +1,8 @@
+# private working files — not part of the published skill
+_private/
+
+# machine-local Claude Code settings (contains local absolute paths)
+.claude/settings.local.json
+
+# OS cruft
+.DS_Store

@@ -15,47 +15,42 @@ export function AudioPlayer({
   const [paused, setPaused] = useState(false);
   const [available, setAvailable] = useState(true);
 
-  // Initialize audio
+  // A single audio element is created for the active stage and released when
+  // the source changes, so intro and invitation music cannot overlap.
   useEffect(() => {
     if (!enabled) return;
     let cancelled = false;
-
-    const init = async () => {
-      try {
-        const head = await fetch(src, { method: "HEAD", cache: "no-store" });
-        if (!head.ok) {
-          if (!cancelled) setAvailable(false);
-          return;
-        }
-      } catch {
-        if (!cancelled) setAvailable(false);
-        return;
+    setReady(false);
+    setAvailable(true);
+    const audio = new Audio(src);
+    audio.loop = true;
+    audio.preload = "auto";
+    audio.volume = 0.75;
+    audioRef.current = audio;
+    audio.addEventListener("error", () => {
+      if (!cancelled) setAvailable(false);
+    });
+    audio.play().then(() => {
+      if (!cancelled) {
+        setPaused(false);
+        setReady(true);
       }
-
-      if (cancelled) return;
-
-      const audio = new Audio(src);
-      audio.loop = true;
-      audio.preload = "auto";
-      audio.volume = 0.75;
-      audioRef.current = audio;
-
-      try {
-        await audio.play();
-        if (!cancelled) setPaused(false);
-      } catch {
-        if (!cancelled) setPaused(true);
-      } finally {
-        if (!cancelled) setReady(true);
+    }).catch(() => {
+      if (!cancelled) {
+        setPaused(true);
+        setReady(true);
       }
-    };
-
-    init();
+    });
 
     return () => {
       cancelled = true;
       const audio = audioRef.current;
-      if (audio) audio.pause();
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.removeAttribute("src");
+        audio.load();
+      }
       audioRef.current = null;
     };
   }, [enabled, src]);
@@ -93,14 +88,16 @@ export function AudioPlayer({
 
     window.addEventListener("blur", handleBlur);
     window.addEventListener("focus", handleFocus);
-    document.addEventListener("visibilitychange", () => {
+    const handleVisibilityChange = () => {
       if (document.hidden) handleBlur();
       else handleFocus();
-    });
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.removeEventListener("blur", handleBlur);
       window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled, paused]);

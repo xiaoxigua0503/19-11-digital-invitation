@@ -27,9 +27,6 @@ export async function callAppsScript<T>({
 
   const responseText = await res.text();
 
-console.log("Apps Script HTTP status:", res.status);
-console.log("Apps Script response:", responseText);
-
 let data: unknown = null;
 
 try {
@@ -37,7 +34,7 @@ try {
 } catch {
   return {
     ok: false,
-    error: `Invalid JSON response (HTTP ${res.status}): ${responseText.slice(0, 300)}`,
+    error: `Invalid JSON response (HTTP ${res.status})`,
   };
 }
 

@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #fff7ef;
-  --paper2: #fff1e4;
-  --ink: #3a1f1b;
-  --ink-muted: #6d4a44;
-  --peach: #fbcba4;
-  --dusty-rose: #d7a795;
-  --burgundy: #6c1613;
+  --paper: #fbf8ee;
+  --paper2: #eef4fb;
+  --ink: #182844;
+  --ink-muted: #56657e;
+  --peach: #f7cdd8;
+  --dusty-rose: #c9c2e8;
+  --burgundy: #304b70;
   --terracotta: #f49c76;
-  --dusty-blue: #9cbbcf;
+  --dusty-blue: #a9cbe2;
 }
 
 @theme inline {
@@ -88,7 +88,7 @@ body::before {
         rgba(255, 255, 255, 0.6),
         rgba(255, 255, 255, 0.78)
       ),
-      url("/background/1.jpg");
+      url("/background/6.jpg");
   }
   .card-bg-2 {
     background-image: linear-gradient(
@@ -97,7 +97,7 @@ body::before {
         rgba(255, 255, 255, 0.6),
         rgba(255, 255, 255, 0.78)
       ),
-      url("/background/2.jpg");
+      url("/background/7.jpg");
   }
   .card-bg-3 {
     background-image: linear-gradient(
@@ -106,7 +106,7 @@ body::before {
         rgba(255, 255, 255, 0.6),
         rgba(255, 255, 255, 0.78)
       ),
-      url("/background/3.jpg");
+      url("/background/8.jpg");
   }
   .card-bg-4 {
     background-image: linear-gradient(
@@ -115,7 +115,7 @@ body::before {
         rgba(255, 255, 255, 0.6),
         rgba(255, 255, 255, 0.78)
       ),
-      url("/background/4.jpg");
+      url("/background/9.jpg");
   }
   .card-bg-5 {
     background-image: linear-gradient(
@@ -124,10 +124,31 @@ body::before {
         rgba(255, 255, 255, 0.6),
         rgba(255, 255, 255, 0.78)
       ),
-      url("/background/5.jpg");
+      url("/background/10.jpg");
   }
 }
 
 ::selection {
   background: color-mix(in oklab, var(--peach) 65%, white);
+}
+
+@keyframes envelopeFloat { 0%,100% { transform: translateY(0) rotate(-.4deg) } 50% { transform: translateY(-9px) rotate(.4deg) } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.25);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.18);
+  }
+  60% {
+    transform: scale(1);
+  }
 }

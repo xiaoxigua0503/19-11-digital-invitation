@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { event } from "@/lib/wedding";
 
 function escapeHtml(value: string) {
   return value
@@ -36,12 +37,11 @@ export async function sendRsvpConfirmation(
   const safeGuestCount = Math.max(1, Number(guestCount) || 1);
 
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://20-10-digital-invitation.vercel.app";
+    process.env.NEXT_PUBLIC_SITE_URL || "";
 
   const subject = isAttending
-    ? "20/10 – Xác nhận đăng ký của bạn ✨"
-    : "20/10 – Xác nhận RSVP của bạn";
+    ? `${event.eventName} – RSVP confirmed ✨`
+    : `${event.eventName} – RSVP update`;
 
   const html = isAttending
     ? `
@@ -50,7 +50,7 @@ export async function sendRsvpConfirmation(
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xác nhận RSVP 20/10</title>
+  <title>${event.eventName} RSVP</title>
 </head>
 
 <body style="
@@ -89,7 +89,7 @@ export async function sendRsvpConfirmation(
           color: #a87568;
           margin-bottom: 12px;
         ">
-          20/10 · Vietnamese Women's Day
+          ${event.eventName}
         </div>
 
         <h1 style="
@@ -123,7 +123,7 @@ export async function sendRsvpConfirmation(
           line-height: 1.7;
           color: #705c56;
         ">
-          Cảm ơn bạn đã đăng ký tham dự chương trình 20/10.
+          Cảm ơn bạn đã đăng ký tham dự chương trình ${event.eventName}.
           Thông tin RSVP của bạn đã được ghi nhận thành công.
         </p>
 
@@ -141,7 +141,7 @@ export async function sendRsvpConfirmation(
             color: #7d211b;
             margin-bottom: 18px;
           ">
-            20/10 – Vietnamese Women's Day
+            ${event.eventName}
           </div>
 
           <div style="
@@ -151,17 +151,17 @@ export async function sendRsvpConfirmation(
           ">
             <div>
               <strong style="color: #5d4037;">Ngày:</strong>
-              20 tháng 10, 2026
+              ${event.date.display}
             </div>
 
             <div>
               <strong style="color: #5d4037;">Thời gian:</strong>
-              11:00
+              ${event.date.time ?? "To be announced"}
             </div>
 
             <div>
               <strong style="color: #5d4037;">Địa điểm:</strong>
-              Chongqing University, Trung Quốc
+              ${event.venue.name}
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@ export async function sendRsvpConfirmation(
           line-height: 1.6;
           color: #7d211b;
         ">
-          Hẹn gặp bạn vào ngày 20/10 tại Trùng Khánh! 🤍
+          See you on ${event.date.display}! 🤍
         </p>
 
         <!-- CTA -->
@@ -273,7 +273,7 @@ export async function sendRsvpConfirmation(
           font-size: 12px;
           color: #9a8983;
         ">
-          20.10.2026 · Chongqing
+          ${event.date.display}
         </div>
       </div>
 
@@ -289,7 +289,7 @@ export async function sendRsvpConfirmation(
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xác nhận RSVP 20/10</title>
+  <title>${event.eventName} RSVP</title>
 </head>
 
 <body style="
@@ -327,7 +327,7 @@ export async function sendRsvpConfirmation(
           color: #a87568;
           margin-bottom: 12px;
         ">
-          20/10 · Vietnamese Women's Day
+          ${event.eventName}
         </div>
 
         <h1 style="
@@ -358,7 +358,7 @@ export async function sendRsvpConfirmation(
           line-height: 1.7;
           color: #705c56;
         ">
-          Cảm ơn bạn đã phản hồi lời mời tham dự chương trình 20/10.
+          Cảm ơn bạn đã phản hồi lời mời tham dự chương trình ${event.eventName}.
           Chúng mình đã ghi nhận rằng bạn sẽ không tham dự sự kiện lần này.
         </p>
 
@@ -375,7 +375,7 @@ export async function sendRsvpConfirmation(
             color: #7d211b;
             margin-bottom: 18px;
           ">
-            20/10 – Vietnamese Women's Day
+            ${event.eventName}
           </div>
 
           <div style="
@@ -385,12 +385,12 @@ export async function sendRsvpConfirmation(
           ">
             <div>
               <strong style="color: #5d4037;">Ngày:</strong>
-              20 tháng 10, 2026
+              ${event.date.display}
             </div>
 
             <div>
               <strong style="color: #5d4037;">Địa điểm:</strong>
-              Chongqing University, Trung Quốc
+              ${event.venue.name}
             </div>
 
             <div>
@@ -470,7 +470,7 @@ export async function sendRsvpConfirmation(
           font-size: 12px;
           color: #9a8983;
         ">
-          20.10.2026 · Chongqing
+          ${event.date.display}
         </div>
       </div>
 
@@ -483,45 +483,45 @@ export async function sendRsvpConfirmation(
 
   const text = isAttending
     ? `
-20/10 – Vietnamese Women's Day
+${event.eventName}
 
 RSVP của bạn đã được xác nhận ✨
 
 Xin chào ${name},
 
-Cảm ơn bạn đã đăng ký tham dự chương trình 20/10.
+Cảm ơn bạn đã đăng ký tham dự chương trình ${event.eventName}.
 Thông tin RSVP của bạn đã được ghi nhận thành công.
 
 THÔNG TIN SỰ KIỆN
-Ngày: 20 tháng 10, 2026
-Thời gian: 11:00
-Địa điểm: Chongqing University, Trung Quốc
+Ngày: ${event.date.display}
+Thời gian: ${event.date.time ?? "To be announced"}
+Địa điểm: ${event.venue.name}
 
 THÔNG TIN ĐĂNG KÝ
 Trạng thái: Bạn sẽ tham dự
 Số người: ${safeGuestCount}
 
-Hẹn gặp bạn vào ngày 20/10 tại Trùng Khánh!
+See you on ${event.date.display}!
 
 Xem lại thư mời:
 ${siteUrl}
 
 Một ngày dành cho yêu thương.
-20.10.2026 · Chongqing
+${event.date.display}
 `
     : `
-20/10 – Vietnamese Women's Day
+${event.eventName}
 
 RSVP của bạn đã được ghi nhận
 
 Xin chào ${name},
 
-Cảm ơn bạn đã phản hồi lời mời tham dự chương trình 20/10.
+Cảm ơn bạn đã phản hồi lời mời tham dự chương trình ${event.eventName}.
 Chúng mình đã ghi nhận rằng bạn sẽ không tham dự sự kiện lần này.
 
 THÔNG TIN SỰ KIỆN
-Ngày: 20 tháng 10, 2026
-Địa điểm: Chongqing University, Trung Quốc
+Ngày: ${event.date.display}
+Địa điểm: ${event.venue.name}
 
 Trạng thái: Không tham dự
 
@@ -531,11 +531,11 @@ Xem lại thư mời:
 ${siteUrl}
 
 Một ngày dành cho yêu thương.
-20.10.2026 · Chongqing
+${event.date.display}
 `;
 
   await transporter.sendMail({
-    from: `"20/10 · Vietnamese Women's Day" <${process.env.EMAIL_USER}>`,
+    from: `"${event.eventName}" <${process.env.EMAIL_USER}>`,
     replyTo: process.env.EMAIL_USER,
     to: email,
     subject,

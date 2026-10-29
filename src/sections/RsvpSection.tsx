@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { event } from "@/lib/wedding";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { Button, ButtonSoft } from "@/components/Button";
@@ -10,46 +11,30 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
-// ISO format for calendar: YYYYMMDDTHHMMSS
-const CAL_START = "20261020T010000Z"; // 09:00 Chongqing = 01:00 UTC
-const CAL_END   = "20261020T060000Z"; // 14:00 Chongqing = 06:00 UTC
-const CAL_TITLE = "20/10 – Nâng cao niềm tin";
-const CAL_LOCATION = "Chongqing, Trung Quốc";
-const CAL_DESCRIPTION = "Lời mời học sinh Việt Nam tại Chongqing cho ngày 20/10.";
+const CAL_TITLE = event.eventName;
+const CAL_LOCATION = event.venue.name;
+const CAL_DESCRIPTION = event.description;
 
 function buildGoogleCalendarUrl() {
   const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text: CAL_TITLE,
-    dates: `${CAL_START}/${CAL_END}`,
-    details: CAL_DESCRIPTION,
-    location: CAL_LOCATION,
+    action: "TEMPLATE", text: CAL_TITLE,
+    dates: `${event.date.calendarDate}/${String(Number(event.date.calendarDate) + 1)}`,
+    details: CAL_DESCRIPTION, location: CAL_LOCATION,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
 function downloadIcs() {
   const ics = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//20/10 Invitation//VI",
-    "BEGIN:VEVENT",
-    `DTSTART:${CAL_START}`,
-    `DTEND:${CAL_END}`,
-    `SUMMARY:${CAL_TITLE}`,
-    `DESCRIPTION:${CAL_DESCRIPTION}`,
-    `LOCATION:${CAL_LOCATION}`,
-    "END:VEVENT",
-    "END:VCALENDAR",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//International Men's Day Invitation//EN",
+    "BEGIN:VEVENT", `DTSTART;VALUE=DATE:${event.date.calendarDate}`,
+    `DTEND;VALUE=DATE:${String(Number(event.date.calendarDate) + 1)}`, `SUMMARY:${CAL_TITLE}`,
+    `DESCRIPTION:${CAL_DESCRIPTION}`, `LOCATION:${CAL_LOCATION}`,
+    "END:VEVENT", "END:VCALENDAR",
   ].join("\r\n");
-
   const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "20-10-invitation.ics";
-  a.click();
-  URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob); const a = document.createElement("a");
+  a.href = url; a.download = "international-mens-day-2026.ics"; a.click(); URL.revokeObjectURL(url);
 }
 
 type Status =

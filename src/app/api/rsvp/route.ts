@@ -43,8 +43,7 @@ export async function POST(req: Request) {
   if (result.ok) {
     try {
       await sendRsvpConfirmation(email, name, attendance, guestCount);
-    } catch (err) {
-      console.error("Failed to send confirmation email:", err);
+    } catch {
       // We still return success to the client even if the email fails.
     }
   }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { event } from "@/lib/wedding";
 
 const display = Cormorant_Garamond({
   variable: "--font-display",
@@ -18,20 +19,15 @@ const body = Plus_Jakarta_Sans({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 export const metadata: Metadata = {
-  title: "20/10 | Lời mời học sinh Việt Nam tại Chongqing",
+  title: `${event.eventName} | ${event.date.display}`,
   description:
-    "Một ngày ý nghĩa dành cho phụ nữ Việt Nam tại Chongqing, Trung Quốc.",
+    event.description,
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   openGraph: {
-    title: "20/10 | Lời mời học sinh Việt Nam tại Chongqing",
+    title: `${event.eventName} | ${event.date.display}`,
     description:
-      "Một ngày ý nghĩa dành cho phụ nữ Việt Nam tại Chongqing, Trung Quốc.",
+      event.description,
     type: "website",
-    images: ["/intro/logo.jpg"],
-  },
-  icons: {
-    icon: "/intro/logo.jpg",
-    apple: "/intro/logo.jpg",
   },
 };
 
